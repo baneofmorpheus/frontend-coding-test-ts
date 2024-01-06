@@ -1,12 +1,8 @@
 import axios, { AxiosError } from 'axios'
 
-type ToastMessage = {
-  severity: 'error' | 'success'
-  summary: string
-  detail: string
-  life?: number
-}
-const errorHandler = (error: any | AxiosError): ToastMessage => {
+import { ToastMessageType } from '../types/toast'
+
+const errorHandler = (error: any | AxiosError): ToastMessageType => {
   /** Handle normal errors */
   if (!axios.isAxiosError(error)) {
     return {
@@ -21,7 +17,6 @@ const errorHandler = (error: any | AxiosError): ToastMessage => {
       severity: 'error',
       summary: 'Network error',
       detail: error.message,
-      life: 10000,
     }
   }
   /** Handle axios errors */
@@ -33,7 +28,6 @@ const errorHandler = (error: any | AxiosError): ToastMessage => {
         severity: 'error',
         summary: 'Character not found',
         detail: 'No character found matching that name`',
-        life: 10000,
       }
 
     default:
@@ -41,7 +35,6 @@ const errorHandler = (error: any | AxiosError): ToastMessage => {
         severity: 'error',
         summary: 'System error',
         detail: data.error || 'Something went wrong',
-        life: 10000,
       }
   }
 }

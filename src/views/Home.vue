@@ -1,21 +1,7 @@
 <template>
-  <div class="w-full min-h-screen pt-10 pb-14 pl-2 pr-2">
+  <div class="w-full relative min-h-screen pt-10 pb-14 pl-2 pr-2">
     <div v-if="!isLoadingApiCall && characters.length < 1" class="text-center">
       <p>No characters to display</p>
-    </div>
-
-    <div class="flex justify-between rounded p-3 bg-red-400 w-60">
-      <div class="flex gap-x-4">
-        <div>Icon</div>
-        <div class="text-left">
-          <p>Info</p>
-          <p>Message Content</p>
-        </div>
-      </div>
-
-      <div>
-        <p>&times;</p>
-      </div>
     </div>
 
     <div class="mb-4">
@@ -99,11 +85,13 @@
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import { RickAndMortCharacterList } from '../types/favourites'
+import errorHandler from '../helpers/errorHandler'
 
 const characters = ref<RickAndMortCharacterList>([])
 const favouriteCharacters = ref<Array<boolean>>([])
 const isLoadingApiCall = ref(false)
 const nameFilter = ref('')
+const emit = defineEmits(['addNotification'] as const)
 
 const getCharacters = async () => {
   isLoadingApiCall.value = true
@@ -112,8 +100,14 @@ const getCharacters = async () => {
       `https://rickandmortyapi.com/api/character?name=${nameFilter.value}`,
     )
     characters.value = response.data.results
-  } catch (error: any) {
-    console.log(error)
+    emit('addNotification', {
+      severity: 'success',
+      summary: 'Data retrieved',
+      detail: 'Characters list has loaded successfully',
+    })
+  } catch (error: unknown) {
+    const toastData = errorHandler(error)
+    emit('addNotification', toastData)
 
   }
   isLoadingApiCall.value = false

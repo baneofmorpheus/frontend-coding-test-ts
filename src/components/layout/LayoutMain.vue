@@ -24,6 +24,15 @@
     </div>
   </nav>
   <main class="flex justify-center">
-    <router-view />
+    <router-view v-on:add-notification="handleAddNotification" />
   </main>
 </template>
+<script setup lang="ts">
+import { ToastMessageType } from '../../types/toast'
+
+const emit = defineEmits(['addNotification'] as const)
+
+const handleAddNotification = (toast: ToastMessageType) => {
+  emit('addNotification', toast)
+}
+</script>

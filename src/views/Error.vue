@@ -6,6 +6,8 @@
 </template>
 
 <script setup lang="ts">
+defineEmits(['addNotification'] as const)
+
 interface Props {
   title?: string
   message?: string
