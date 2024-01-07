@@ -1,5 +1,9 @@
 <template>
   <div class="w-full relative min-h-screen pt-10 pb-14 pl-2 pr-2">
+    <h2 class="text-center mb-4 text-xl">
+      You can search for a character or select a favourite Rick and Morty
+      character
+    </h2>
     <div class="mb-4">
       <div
         class="w-full lg:w-3/4 ml-auto mr-auto mb-2 flex justify-center items-stretch"
