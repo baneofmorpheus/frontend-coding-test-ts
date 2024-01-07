@@ -15,45 +15,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, provide, onMounted } from 'vue'
+import { ref } from 'vue'
 import { ToastMessageType } from './types/toast'
 import Toast from './components/notification/Toast.vue'
 
 const toasts = ref<Array<ToastMessageType>>([])
 const closeToast = (index: number) => {
-
   toasts.value.splice(index, 1)
 }
 const handleAddNotification = (toast: ToastMessageType) => {
-
   toasts.value.push(toast)
 }
-provide('toasts', toasts)
-onMounted(() => {
-  // toasts.value.push({
-  //   severity: 'success',
-  //   summary: 'Error2',
-  //   detail: 'Api error detected',
-  // })
-  // toasts.value.push({
-  //   severity: 'error',
-  //   summary: 'Error1',
-  //   detail: 'Api error detected',
-  // })
-  // toasts.value.push({
-  //   severity: 'error',
-  //   summary: 'Error3',
-  //   detail: 'Api error detected',
-  // })
-  // toasts.value.push({
-  //   severity: 'error',
-  //   summary: 'Error4',
-  //   detail: 'Api error detected',
-  // })
-  // toasts.value.push({
-  //   severity: 'error',
-  //   summary: 'Error5',
-  //   detail: 'Api error detected',
-  // })
-})
 </script>

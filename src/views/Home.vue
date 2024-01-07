@@ -34,63 +34,30 @@
       v-if="!isLoadingApiCall"
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
     >
-      <div
+      <Character
         v-for="(singleCharacter, index) in characters"
         v-bind:key="index"
-        class="shadow-lg rounded-lg"
-      >
-        <div>
-          <img
-            v-bind:alt="singleCharacter.name"
-            v-bind:src="singleCharacter.image"
-            class="w-full h-auto"
-          />
-
-          <div class="text-left p-2 text-xs lg:text-sm">
-            <div class="mb-2">
-              <button
-                type="button"
-                class="text-2xl"
-                v-on:click="toggleFavorite(index)"
-              >
-                <span v-if="favouriteCharacters[index]" class="text-red-600">
-                  &hearts;
-                </span>
-                <span
-                  v-if="!favouriteCharacters[index]"
-                  class="hover:text-red-600"
-                >
-                  &#x2661;
-                </span>
-              </button>
-            </div>
-            <h4 class="mb-2">Character Name - {{ singleCharacter.name }}</h4>
-            <p class="mb-2">Status - {{ singleCharacter.status }}</p>
-            <p class="mb-2">Species - {{ singleCharacter.species }}</p>
-            <p class="mb-2">Gender -{{ singleCharacter.gender }}</p>
-            <p class="mb-2">Origin - {{ singleCharacter.origin.name }}</p>
-            <p class="mb-2">Location - {{ singleCharacter.location.name }}</p>
-            <p class="mb-2">
-              No of Episodes Featured - {{ singleCharacter.episode.length }}
-            </p>
-          </div>
-        </div>
-      </div>
+        v-bind:index="index"
+        v-bind:single-character="singleCharacter"
+        v-on:toggle-favourite="toggleFavorite"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, provide } from 'vue'
 import axios from 'axios'
 import { RickAndMortCharacterList } from '../types/favourites'
 import errorHandler from '../helpers/errorHandler'
+import Character from '../components/character/Character.vue'
 
 const characters = ref<RickAndMortCharacterList>([])
 const favouriteCharacters = ref<Array<boolean>>([])
 const isLoadingApiCall = ref(false)
 const nameFilter = ref('')
 const emit = defineEmits(['addNotification'] as const)
+provide('favouriteCharacters', favouriteCharacters)
 
 const getCharacters = async () => {
   isLoadingApiCall.value = true
