@@ -1,9 +1,5 @@
 <template>
   <div class="w-full relative min-h-screen pt-10 pb-14 pl-2 pr-2">
-    <div v-if="!isLoadingApiCall && characters.length < 1" class="text-center">
-      <p>No characters to display</p>
-    </div>
-
     <div class="mb-4">
       <div
         class="w-full lg:w-3/4 ml-auto mr-auto mb-2 flex justify-center items-stretch"
@@ -27,6 +23,9 @@
       <p class="text-center text-xs text-gray-500">
         Clear the search field and click the search button to reset filter
       </p>
+    </div>
+    <div v-if="!isLoadingApiCall && characters.length < 1" class="text-center">
+      <p>No characters to display</p>
     </div>
 
     <div v-if="isLoadingApiCall">Loading data...</div>
@@ -108,7 +107,6 @@ const getCharacters = async () => {
   } catch (error: unknown) {
     const toastData = errorHandler(error)
     emit('addNotification', toastData)
-
   }
   isLoadingApiCall.value = false
 }

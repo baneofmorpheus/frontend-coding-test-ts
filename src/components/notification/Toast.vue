@@ -2,8 +2,8 @@
   <div
     class="flex mb-10 border-l-8 items-center justify-between rounded p-3 w-80 h-20"
     v-bind:class="{
-      [`border-l-${toastStyle[toast.severity]}-500`]: true,
-      [`bg-${toastStyle[toast.severity]}-400`]: true,
+      [`${toastStyle[toast.severity].border}`]: true,
+      [`${toastStyle[toast.severity].bg}`]: true,
     }"
   >
     <div class="flex gap-x-6 text-gray-900">
@@ -33,8 +33,8 @@ const { toast } = defineProps<{
 }>()
 const emit = defineEmits(['closeToast'] as const)
 const toastStyle = ref({
-  error: 'red',
-  success: 'green',
+  error: { border: 'border-l-red-500', bg: 'bg-red-400' },
+  success: { border: 'border-l-green-500', bg: 'bg-green-400' },
 })
 
 const handleCloseToast = () => {
